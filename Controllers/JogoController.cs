@@ -26,7 +26,12 @@ namespace CadJogosASPNET.Controllers
             try
             {
                 JogoViewModel jogo = new JogoViewModel();
+
                 jogo.DataAquisicao = DateTime.Now;
+
+                JogoDAO dao = new JogoDAO();
+                jogo.Id = dao.ProximoId();
+
                 return View("Form", jogo);
             }
             catch (Exception erro)

@@ -6,8 +6,6 @@ namespace CadJogosASPNET.Models
     {
         public string Erro { get; set; }
         public string RequestId { get; set; }
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
 
         public ErrorViewModel(string erro)
         {
@@ -17,6 +15,9 @@ namespace CadJogosASPNET.Models
         public ErrorViewModel()
         {
         }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
 
 
     }
