@@ -25,6 +25,7 @@ namespace CadJogosASPNET.Controllers
         {
             try
             {
+                ViewBag.Operacao = "I";
                 JogoViewModel jogo = new JogoViewModel();
 
                 jogo.DataAquisicao = DateTime.Now;
@@ -40,15 +41,16 @@ namespace CadJogosASPNET.Controllers
             }
         }
 
-        public IActionResult Salvar(JogoViewModel aluno)
+        public IActionResult Salvar(JogoViewModel aluno, string operacao)
         { 
             try
             {
                 JogoDAO dao = new JogoDAO();
-                if (dao.Consultar(aluno.Id) == null)
+                if (operacao == "I")
                     dao.Inserir(aluno);
                 else
                     dao.Alterar(aluno); 
+
                 return RedirectToAction("index");
             }
             catch (Exception erro)
@@ -62,6 +64,7 @@ namespace CadJogosASPNET.Controllers
         {
             try
             {
+                ViewBag.Operacao = "A";
                 JogoDAO dao = new JogoDAO();
                 JogoViewModel aluno = dao.Consultar(id);
                 if (aluno == null)
