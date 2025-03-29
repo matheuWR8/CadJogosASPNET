@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using CadJogosASPNET.DAO;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace CadJogosASPNET.Controllers
 {
@@ -41,15 +42,22 @@ namespace CadJogosASPNET.Controllers
             }
         }
 
-        public IActionResult Salvar(JogoViewModel aluno, string operacao)
+        public IActionResult Salvar(JogoViewModel jogo, string operacao)
         { 
             try
             {
+                ValidarDados(jogo, operacao);
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Operacao = operacao;
+                    return View("Form", jogo);
+                }
+
                 JogoDAO dao = new JogoDAO();
                 if (operacao == "I")
-                    dao.Inserir(aluno);
+                    dao.Inserir(jogo);
                 else
-                    dao.Alterar(aluno); 
+                    dao.Alterar(jogo); 
 
                 return RedirectToAction("Index");
             }
@@ -66,11 +74,11 @@ namespace CadJogosASPNET.Controllers
             {
                 ViewBag.Operacao = "A";
                 JogoDAO dao = new JogoDAO();
-                JogoViewModel aluno = dao.Consultar(id);
-                if (aluno == null)
+                JogoViewModel jogo = dao.Consultar(id);
+                if (jogo == null)
                     return RedirectToAction("Index");
                 else
-                    return View("Form", aluno);
+                    return View("Form", jogo);
             }
             catch (Exception erro)
             {
@@ -90,6 +98,35 @@ namespace CadJogosASPNET.Controllers
             {
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
+        }
+
+        private void ValidarDados(JogoViewModel jogo, string operacao) 
+        {
+            ModelState.Clear();
+            JogoDAO dao = new JogoDAO();
+
+            if (jogo.Id <=0)
+                ModelState.AddModelError("Id", "Código inválido!");
+            else
+            {
+                if (operacao == "I" && dao.Consultar(jogo.Id) != null)
+                    ModelState.AddModelError("Id", "Código já está em uso.");
+
+                if (operacao == "A" && dao.Consultar(jogo.Id) == null)
+                    ModelState.AddModelError("Id", "Jogo não está cadastrado.");
+            }
+
+            if (string.IsNullOrEmpty(jogo.Descricao)) 
+                ModelState.AddModelError("Descricao", "Preencha a descrição.");
+
+            if (jogo.ValorLocacao < 0)
+                ModelState.AddModelError("ValorLocacao", "Campo obrigatório.");
+
+            if (jogo.CategoriaId < 0)
+                ModelState.AddModelError("CategoriaId", "Informe o código da categoria.");
+
+            if (jogo.DataAquisicao > DateTime.Now)
+                ModelState.AddModelError("DataAquisicao", "Data inválida!");
         }
     }
 }

@@ -22,22 +22,29 @@
             <br />
 
             <label for="Descricao" class="control-label">Descrição</label>
-            <input type="text" Name="Descricao" value="@Model.Descricao" />
+            <input type="text" Name="Descricao" value="@Model.Descricao" class="form-control" />
+            <span asp-validation-for="Descricao" class="text-danger"></span>
             <br />
 
             <label for="ValorLocacao" class="control-label">Valor de Locação</label>
-            <input type="text" Name="ValorLocacao" value="@Model.ValorLocacao" />
+            <input type="text" Name="ValorLocacao" value="@Model.ValorLocacao" class="form-control" />
+            <span asp-validation-for="ValorLocacao" class="text-danger"></span>
             <br />
 
             <label for="DataAquisicao" class="control-label">Data de aquisição</label>
-            <input type="date" Name="DataAquisicao" value="@Model.DataAquisicao.ToString("yyyy-MM-dd")" />
+            <input type="date" Name="DataAquisicao" value="@Model.DataAquisicao.ToString("yyyy-MM-dd")" class="form-control" />
+            <span asp-validation-for="DataAquisicao" class="text-danger"></span>
             <br />
 
             <label for="CategoriaId" class="control-label">Categoria</label>
-            <input type="number" Name="CategoriaId" value="@Model.CategoriaId" />
+            <input type="number" Name="CategoriaId" value="@Model.CategoriaId" class="form-control" />
+            <span asp-validation-for="CategoriaId" class="text-danger"></span>
             <br />
 
             <input type="submit" value="Salvar dados" />
+            &nbsp;
+            <a href="/jogo/index" class="btn btn-light">Voltar</a>
+
             <br />
         </form>
     </div>
