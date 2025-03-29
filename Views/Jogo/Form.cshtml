@@ -7,9 +7,9 @@
 <div class="row">
     <div class="col-md-4">
         <form action="Salvar" method="post">
-            <input type="hidden" name="Operacao" value="ViewBag.Operacao" />
+            <input type="hidden" name="operacao" value="@ViewBag.Operacao" />
 
-            <label for="Id" class="control-label">RA</label>
+            <label for="Id" class="control-label">Código</label>
             @if (ViewBag.Operacao == "I")
             {
                 <input type="number" Name="Id" value="@Model.Id" class="form-control"/>

@@ -13,11 +13,11 @@ namespace CadJogosASPNET.Controllers
             {
                 JogoDAO dao = new JogoDAO();
                 var lista = dao.Listar();
-                return View("index", lista);
+                return View("Index", lista);
             }
             catch (Exception erro)
             {
-                return View("error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
 
@@ -37,7 +37,7 @@ namespace CadJogosASPNET.Controllers
             }
             catch (Exception erro)
             {
-                return View("error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
 
@@ -51,11 +51,11 @@ namespace CadJogosASPNET.Controllers
                 else
                     dao.Alterar(aluno); 
 
-                return RedirectToAction("index");
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                return View("error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
 
         }
@@ -68,9 +68,9 @@ namespace CadJogosASPNET.Controllers
                 JogoDAO dao = new JogoDAO();
                 JogoViewModel aluno = dao.Consultar(id);
                 if (aluno == null)
-                    return RedirectToAction("index");
+                    return RedirectToAction("Index");
                 else
-                    return View("form", aluno);
+                    return View("Form", aluno);
             }
             catch (Exception erro)
             {
@@ -84,7 +84,7 @@ namespace CadJogosASPNET.Controllers
             {
                 JogoDAO dao = new JogoDAO();
                 dao.Excluir(id);
-                return RedirectToAction("index");
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
