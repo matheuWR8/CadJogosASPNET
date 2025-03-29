@@ -45,5 +45,49 @@ namespace CadJogosASPNET.DAO
                 }
             }
         }
+
+        /// <summary>
+        /// Executa uma stored procedure
+        /// </summary>
+        /// <param name="nomeProcedure">Nome da SP a ser executada</param>
+        /// <param name="parametros">Parâmetros a serem incluídos no comando</param>
+        public static void ExecutarProcedure(string nomeProcedure, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexao = ConexaoDB.GetConexao())
+            {
+                using (SqlCommand comando = new SqlCommand(nomeProcedure, conexao))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+                    if (parametros != null)
+                        comando.Parameters.AddRange(parametros);
+                    comando.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Executa uma stored procedure com comando SELECT
+        /// </summary>
+        /// <param name="nomeProcedure">Nome da SP a ser executada</param>
+        /// <param name="parametros">Parâmetros a serem incluídos no comando</param>
+        /// <returns>Tabela contendo os dados da consulta</returns>
+        public static DataTable ExecutarProcedureSelect(string nomeProcedure, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexao = ConexaoDB.GetConexao())
+            {
+                using (SqlDataAdapter adapter = new SqlDataAdapter(nomeProcedure, conexao))
+                {
+                    if (parametros != null)
+                        adapter.SelectCommand.Parameters.AddRange(parametros);
+                    adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                    DataTable tabela = new DataTable();
+                    adapter.Fill(tabela);
+                    return tabela;
+                }
+            }
+        }
+
+
     }
 }

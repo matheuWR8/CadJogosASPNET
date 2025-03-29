@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System;
 using CadJogosASPNET.Models;
+using Microsoft.CodeAnalysis;
 
 namespace CadJogosASPNET.DAO
 {
@@ -15,11 +16,7 @@ namespace CadJogosASPNET.DAO
         public void Inserir(JogoViewModel jogo)
         {
             SqlParameter[] parametros = CriarParametros(jogo);
-            string sql =
-                "insert into jogos(id, descricao, valor_locacao, data_aquisicao, categoriaID)" +
-                "values (@id, @descricao, @valor_locacao, @data_aquisicao, @categoriaID)";
-
-            HelperDAO.ExecutarSQL(sql, parametros);
+            HelperDAO.ExecutarProcedure("spIncluirJogo", parametros);
         }
 
         /// <summary>
@@ -29,14 +26,7 @@ namespace CadJogosASPNET.DAO
         public void Alterar(JogoViewModel jogo)
         {
             SqlParameter[] parametros = CriarParametros(jogo);
-            string sql = "set dateformat dmy; update jogos set " +
-                "descricao = @descricao, " +
-                "valor_locacao = @valor_locacao, " +
-                "data_aquisicao = @data_aquisicao, " +
-                "categoriaID = @categoriaID " +
-                "where id = @id";
-
-            HelperDAO.ExecutarSQL(sql, parametros);
+            HelperDAO.ExecutarProcedure("spAlterarJogo", parametros);
         }
 
         /// <summary>
@@ -45,9 +35,8 @@ namespace CadJogosASPNET.DAO
         /// <param name="id">Código do jogo</param>
         public void Excluir(int id)
         {
-            string sql = $"delete jogos where id = " + id;
-
-            HelperDAO.ExecutarSQL(sql);
+            SqlParameter[] parametro = { new SqlParameter("id", id) };
+            HelperDAO.ExecutarProcedure("spExcluirJogo", parametro);
         }
 
         /// <summary>
@@ -57,8 +46,9 @@ namespace CadJogosASPNET.DAO
         /// <returns>DTO contendo os dados do jogo</returns>
         public JogoViewModel Consultar(int id)
         {
-            string sql = "select * from jogos where id = " + id;
-            DataTable tabela = HelperDAO.ExecutarSelect(sql);
+            SqlParameter[] parametro = { new SqlParameter("id", id) };
+            DataTable tabela = HelperDAO.ExecutarProcedureSelect("spConsultarJogo", parametro);
+
             if (tabela.Rows.Count == 0)
                 return null;
             else
@@ -76,8 +66,7 @@ namespace CadJogosASPNET.DAO
         {
             List<JogoViewModel> lista = new List<JogoViewModel>();
 
-            string sql = "select * from jogos";
-            DataTable tabela = HelperDAO.ExecutarSelect(sql);
+            DataTable tabela = HelperDAO.ExecutarProcedureSelect("spListarJogos", null);
 
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontarModel(registro));
@@ -85,10 +74,14 @@ namespace CadJogosASPNET.DAO
             return lista;
         }
 
+        /// <summary>
+        /// Busca o maior id da tabela e retorna o seguinte a ele
+        /// </summary>
+        /// <returns>Maior id + 1</returns>
         public int ProximoId()
         {
-            string sql = "select isnull(max(id) +1, 1) as 'MAIOR' from jogos";
-            DataTable tabela = HelperDAO.ExecutarSelect(sql, null);
+            SqlParameter[] parametro = { new SqlParameter("tabela", "jogos") };
+            DataTable tabela = HelperDAO.ExecutarProcedureSelect("spProximoId", parametro);
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]); 
         }
 
