@@ -3,11 +3,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Acervo de Jogos</h2>
+
 <a href="/jogo/create">Novo Registro</a>
 <br />
 
-<h2>Acervo de Jogos</h2>
-<table class="table table-responsive">
+<table class="table table-responsive table-hover table-striped">
     <tr>
         <th>Ações</th>
         <th>Código do Jogo</th>
@@ -18,12 +19,17 @@
     {
         <tr>
             <td>
-                <a href="/jogo/Edit?id=@jogo.Id">Editar</a>
-                <a href="javascript:apagarJogo(@jogo.Id)">Apagar</a>
+                <a href="/jogo/Edit?id=@jogo.Id">
+                    <img src="/img/edit.png" alt="Editar" class="icone">
+                </a>
+                &nbsp;
+                <a href="javascript:apagarJogo(@jogo.Id)">
+                    <img src="/img/delete.png" alt="Apagar" class="icone">
+                </a>
             </td>
             <td>@jogo.Id</td>
             <td>@jogo.Descricao</td>
-            <td>@jogo.ValorLocacao?.ToString("0.00")</td>
+            <td>@jogo.ValorLocacao?.ToString("c")</td>
         </tr>
     }
 </table>
