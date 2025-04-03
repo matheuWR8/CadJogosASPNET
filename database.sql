@@ -79,3 +79,24 @@ begin
 	exec('select isnull(max(id) +1, 1) as MAIOR from ' + @tabela)
 end
 GO
+
+CREATE TABLE Categorias( 
+ id int NOT NULL primary key, 
+ nome varchar(30) NULL, 
+) 
+GO 
+
+--Insira os seguintes registros: 
+insert into categorias (id,nome) values (1, 'Aventura') 
+insert into categorias (id,nome) values (2, 'FPS') 
+insert into categorias (id,nome) values (3, 'Corrida') 
+insert into categorias (id,nome) values (4, 'Esporte') 
+insert into categorias (id,nome) values (5, 'Arcade') 
+GO 
+
+create procedure spListarCategorias
+as
+begin
+ select * from categorias order by nome 
+end
+GO 
