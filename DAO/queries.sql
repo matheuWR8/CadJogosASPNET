@@ -80,23 +80,19 @@ begin
 end
 GO
 
-CREATE TABLE Categorias( 
- id int NOT NULL primary key, 
- nome varchar(30) NULL, 
-) 
-GO 
+Create table Categorias (id int primary key, descricao varchar(max) )
 
 --Insira os seguintes registros: 
-insert into categorias (id,nome) values (1, 'Aventura') 
-insert into categorias (id,nome) values (2, 'FPS') 
-insert into categorias (id,nome) values (3, 'Corrida') 
-insert into categorias (id,nome) values (4, 'Esporte') 
-insert into categorias (id,nome) values (5, 'Arcade') 
+insert into categorias (id,descricao) values (1, 'Ação') 
+insert into categorias (id,descricao) values (2, 'RPG') 
+insert into categorias (id,descricao) values (3, 'Corrida') 
+insert into categorias (id,descricao) values (4, 'Aventura') 
+insert into categorias (id,descricao) values (5, 'Tiro')
 GO 
 
 create procedure spListarCategorias
 as
 begin
- select * from categorias order by nome 
+	select * from categorias order by descricao 
 end
 GO 

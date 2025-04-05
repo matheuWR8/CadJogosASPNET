@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using CadJogosASPNET.DAO;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Security.Cryptography.Xml;
 
 namespace CadJogosASPNET.Controllers
 {
@@ -28,6 +31,7 @@ namespace CadJogosASPNET.Controllers
             {
                 ViewBag.Operacao = "I";
                 JogoViewModel jogo = new JogoViewModel();
+                PrepararListaCategorias();
 
                 jogo.DataAquisicao = DateTime.Now;
 
@@ -50,6 +54,7 @@ namespace CadJogosASPNET.Controllers
                 if (!ModelState.IsValid)
                 {
                     ViewBag.Operacao = operacao;
+                    PrepararListaCategorias();
                     return View("Form", jogo);
                 }
 
@@ -75,6 +80,8 @@ namespace CadJogosASPNET.Controllers
                 ViewBag.Operacao = "A";
                 JogoDAO dao = new JogoDAO();
                 JogoViewModel jogo = dao.Consultar(id);
+                PrepararListaCategorias();
+
                 if (jogo == null)
                     return RedirectToAction("Index");
                 else
@@ -127,6 +134,21 @@ namespace CadJogosASPNET.Controllers
 
             if (jogo.DataAquisicao > DateTime.Now)
                 ModelState.AddModelError("DataAquisicao", "Data inválida!");
+        }
+
+        private void PrepararListaCategorias(){
+            CategoriaDAO categoriaDao = new CategoriaDAO();
+            var categorias = categoriaDao.Listar();
+            List<SelectListItem> listaCategorias = new List<SelectListItem>();
+
+            listaCategorias.Add(new SelectListItem("Selecione uma categoria...", "0"));
+
+            foreach (var categoria in categorias){
+                SelectListItem item = new SelectListItem(categoria.Nome, categoria.Id.ToString());
+                listaCategorias.Add(item);
+            }
+
+            ViewBag.Categorias = listaCategorias;
         }
     }
 }
