@@ -96,3 +96,11 @@ begin
 	select * from categorias order by descricao 
 end
 GO 
+
+ALTER procedure [dbo].[spListarJogos] 
+as
+begin
+	select Jogos.*, Categorias.descricao as NomeCategoria 
+	from Jogos 
+	Left join Categorias on Jogos.categoriaID = Categorias.id 
+end

@@ -119,6 +119,8 @@ namespace CadJogosASPNET.DAO
                 jogo.ValorLocacao = Convert.ToDouble(registro["valor_locacao"]);
             jogo.DataAquisicao = Convert.ToDateTime(registro["data_aquisicao"]);
             jogo.CategoriaId = Convert.ToInt32(registro["categoriaID"]);
+            if (registro.Table.Columns.Contains("NomeCategoria"))
+                jogo.NomeCategoria = registro["NomeCategoria"].ToString();
 
             return jogo;
         }

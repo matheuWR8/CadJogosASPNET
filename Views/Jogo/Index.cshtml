@@ -14,6 +14,8 @@
         <th>Código do Jogo</th>
         <th>Descrição</th>
         <th>Valor de Locação</th>
+        <th>Data de Aquisição</th>
+        <th>Categoria</th>
     </tr>
     @foreach (var jogo in Model)
     {
@@ -30,6 +32,8 @@
             <td>@jogo.Id</td>
             <td>@jogo.Descricao</td>
             <td>@jogo.ValorLocacao?.ToString("c")</td>
+            <td>@jogo.DataAquisicao.ToString("dd/MM/yyyy")</td>
+            <td>@jogo.NomeCategoria</td>
         </tr>
     }
 </table>
