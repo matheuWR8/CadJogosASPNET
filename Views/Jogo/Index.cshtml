@@ -1,6 +1,7 @@
 ﻿@model List<JogoViewModel>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Acervo";
 }
 
 <h2>Acervo de Jogos</h2>
@@ -46,12 +47,12 @@
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-danger",
-            confirmButtonText: "Sim!",
-            cancelButtonText: "Nãaaaoooo!",
+            confirmButtonText: "Sim",
+            cancelButtonText: "Não",
             closeOnConfirm: true,
         },
-            function () {
-                location.href = 'jogo/Delete?id=' + id;
-            });
+        function () {
+            location.href = 'jogo/Delete?id=' + id;
+        });
     }
 </script>
