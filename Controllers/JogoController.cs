@@ -60,9 +60,9 @@ namespace CadJogosASPNET.Controllers
 
                 JogoDAO dao = new JogoDAO();
                 if (operacao == "I")
-                    dao.Inserir(jogo);
+                    dao.Insert(jogo);
                 else
-                    dao.Alterar(jogo); 
+                    dao.Update(jogo); 
 
                 return RedirectToAction("Index");
             }
@@ -98,7 +98,7 @@ namespace CadJogosASPNET.Controllers
             try
             {
                 JogoDAO dao = new JogoDAO();
-                dao.Excluir(id);
+                dao.Delete(id);
                 return RedirectToAction("Index");
             }
             catch (Exception erro)

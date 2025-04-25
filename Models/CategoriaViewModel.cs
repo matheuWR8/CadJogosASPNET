@@ -1,8 +1,7 @@
 namespace CadJogosASPNET.Models
 {
-    public class CategoriaViewModel
+    public class CategoriaViewModel : PadraoViewModel
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
     }
 }

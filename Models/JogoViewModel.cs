@@ -2,9 +2,8 @@
 
 namespace CadJogosASPNET.Models
 {
-    public class JogoViewModel
+    public class JogoViewModel : PadraoViewModel
     {
-        public int Id { get; set; }
         public String Descricao { get; set; }
         public double? ValorLocacao { get; set; }
         public DateTime DataAquisicao { get; set; }

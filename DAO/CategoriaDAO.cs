@@ -1,26 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using CadJogosASPNET.Models;
 
 namespace CadJogosASPNET.DAO
 {
-    public class CategoriaDAO
+    public class CategoriaDAO : PadraoDAO<CategoriaViewModel>
     {
-        public List<CategoriaViewModel> Listar()
+        //public List<CategoriaViewModel> Listar()
+        //{
+        //    List<CategoriaViewModel> lista = new List<CategoriaViewModel>();
+
+        //    DataTable tabela = HelperDAO.ExecutarProcedureSelect("spListarCategorias", null);
+
+        //    foreach (DataRow registro in tabela.Rows)
+        //        lista.Add(MontarModel(registro));
+
+        //    return lista;
+        //}
+
+
+        protected override SqlParameter[] CriarParametros(CategoriaViewModel model)
         {
-            List<CategoriaViewModel> lista = new List<CategoriaViewModel>();
-
-            DataTable tabela = HelperDAO.ExecutarProcedureSelect("spListarCategorias", null);
-
-            foreach (DataRow registro in tabela.Rows)
-                lista.Add(MontarModel(registro));
-
-            return lista;
+            throw new NotImplementedException();
         }
 
 
-        private CategoriaViewModel MontarModel(DataRow registro)
+        protected override CategoriaViewModel MontarModel(DataRow registro)
         {
             CategoriaViewModel categoria = new CategoriaViewModel();
 
@@ -28,6 +35,11 @@ namespace CadJogosASPNET.DAO
             categoria.Nome = registro["descricao"].ToString();
 
             return categoria;
+        }
+
+        protected override void SetTabela()
+        {
+            Tabela = "Categorias";
         }
     }
 }

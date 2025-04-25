@@ -40,7 +40,18 @@
 
 <script>
     function apagarJogo(id) {
-        if (confirm('Confirmar exlusão do registro?'))
-            location.href = 'jogo/delete?id=' + id;
+        swal({
+            title: "Apagar o registro?",
+            text: "Esta operação não terá volta!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Sim!",
+            cancelButtonText: "Nãaaaoooo!",
+            closeOnConfirm: true,
+        },
+            function () {
+                location.href = 'jogo/Delete?id=' + id;
+            });
     }
 </script>
