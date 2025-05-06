@@ -46,7 +46,7 @@ namespace CadJogosASPNET
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Jogo}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
