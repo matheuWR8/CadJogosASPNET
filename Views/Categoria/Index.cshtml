@@ -1,0 +1,52 @@
+@model List<CategoriaViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Categorias";
+}
+
+<h2>Lista de Categorias</h2>
+
+<a href="/jogo/create">Novo Registro</a>
+<br />
+
+<table class="table table-responsive table-hover table-striped">
+    <tr>
+        <th>Ações</th>
+        <th>Código</th>
+        <th>Descrição</th>
+    </tr>
+    @foreach (var categoria in Model)
+    {
+        <tr>
+            <td>
+                <a href="/categoria/Edit?id=@categoria.Id">
+                    <img src="/img/edit.png" alt="Editar" class="icone">
+                </a>
+                &nbsp;
+                <a href="javascript:apagarCategoria(@categoria.Id)">
+                    <img src="/img/delete.png" alt="Apagar" class="icone">
+                </a>
+            </td>
+            <td>@categoria.Id</td>
+            <td>@categoria.Descricao</td>
+        </tr>
+    }
+</table>
+
+<script>
+    function apagarCategoria(id) {
+        swal({
+            title: "Apagar o registro?",
+            text: "Esta operação não terá volta!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Sim",
+            cancelButtonText: "Não",
+            closeOnConfirm: true,
+        },
+        function () {
+            location.href = 'categoria/Delete?id=' + id;
+        });
+    }
+</script>

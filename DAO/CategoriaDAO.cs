@@ -23,16 +23,23 @@ namespace CadJogosASPNET.DAO
 
         protected override SqlParameter[] CriarParametros(CategoriaViewModel model)
         {
-            throw new NotImplementedException();
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("id", model.Id),
+                new SqlParameter("descricao", model.Descricao)
+            };
+
+            return parametros;
         }
 
 
         protected override CategoriaViewModel MontarModel(DataRow registro)
         {
-            CategoriaViewModel categoria = new CategoriaViewModel();
-
-            categoria.Id = Convert.ToInt32(registro["id"]);
-            categoria.Nome = registro["descricao"].ToString();
+            CategoriaViewModel categoria = new CategoriaViewModel()
+            {
+                Id = Convert.ToInt32(registro["id"]),
+                Descricao = registro["descricao"].ToString()
+            };
 
             return categoria;
         }
