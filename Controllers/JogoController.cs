@@ -144,7 +144,7 @@ namespace CadJogosASPNET.Controllers
             listaCategorias.Add(new SelectListItem("Selecione uma categoria...", "0"));
 
             foreach (var categoria in categorias){
-                SelectListItem item = new SelectListItem(categoria.Nome, categoria.Id.ToString());
+                SelectListItem item = new SelectListItem(categoria.Descricao, categoria.Id.ToString());
                 listaCategorias.Add(item);
             }
 
