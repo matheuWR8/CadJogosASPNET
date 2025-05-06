@@ -68,7 +68,7 @@ namespace CadJogosASPNET.Controllers
 
         }
 
-        public IActionResult Edit(int id)
+        public virtual IActionResult Edit(int id)
         {
             try
             {

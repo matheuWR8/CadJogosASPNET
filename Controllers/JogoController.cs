@@ -9,23 +9,15 @@ using System.Security.Cryptography.Xml;
 
 namespace CadJogosASPNET.Controllers
 {
-    public class JogoController : Controller
+    public class JogoController : PadraoControler<JogoViewModel>
     {
-        public IActionResult Index()
-        {
-            try
-            {
-                JogoDAO dao = new JogoDAO();
-                var lista = dao.Listar();
-                return View("Index", lista);
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel(erro.ToString()));
-            }
+        public JogoController() 
+        { 
+            DAO = new JogoDAO();
+            GerarProximoId = true;
         }
 
-        public IActionResult Create()
+        public override IActionResult Create()
         {
             try
             {
@@ -46,7 +38,7 @@ namespace CadJogosASPNET.Controllers
             }
         }
 
-        public IActionResult Salvar(JogoViewModel jogo, string operacao)
+        public override IActionResult Salvar(JogoViewModel jogo, string operacao)
         { 
             try
             {
@@ -73,7 +65,7 @@ namespace CadJogosASPNET.Controllers
 
         }
 
-        public IActionResult Edit(int id)
+        public override IActionResult Edit(int id)
         {
             try
             {
@@ -93,35 +85,37 @@ namespace CadJogosASPNET.Controllers
             }
         }
 
-        public IActionResult Delete(int id)
+        //public IActionResult Delete(int id)
+        //{
+        //    try
+        //    {
+        //        JogoDAO dao = new JogoDAO();
+        //        dao.Delete(id);
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception erro)
+        //    {
+        //        return View("Error", new ErrorViewModel(erro.ToString()));
+        //    }
+        //}
+
+        protected override void ValidarDados(JogoViewModel jogo, string operacao) 
         {
-            try
-            {
-                JogoDAO dao = new JogoDAO();
-                dao.Delete(id);
-                return RedirectToAction("Index");
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel(erro.ToString()));
-            }
-        }
+            //ModelState.Clear();
+            //JogoDAO dao = new JogoDAO();
 
-        private void ValidarDados(JogoViewModel jogo, string operacao) 
-        {
-            ModelState.Clear();
-            JogoDAO dao = new JogoDAO();
+            //if (jogo.Id <=0)
+            //    ModelState.AddModelError("Id", "Código inválido!");
+            //else
+            //{
+            //    if (operacao == "I" && dao.Consultar(jogo.Id) != null)
+            //        ModelState.AddModelError("Id", "Código já está em uso.");
 
-            if (jogo.Id <=0)
-                ModelState.AddModelError("Id", "Código inválido!");
-            else
-            {
-                if (operacao == "I" && dao.Consultar(jogo.Id) != null)
-                    ModelState.AddModelError("Id", "Código já está em uso.");
+            //    if (operacao == "A" && dao.Consultar(jogo.Id) == null)
+            //        ModelState.AddModelError("Id", "Jogo não está cadastrado.");
+            //}
 
-                if (operacao == "A" && dao.Consultar(jogo.Id) == null)
-                    ModelState.AddModelError("Id", "Jogo não está cadastrado.");
-            }
+            base.ValidarDados(jogo, operacao);
 
             if (string.IsNullOrEmpty(jogo.Descricao)) 
                 ModelState.AddModelError("Descricao", "Preencha a descrição.");
