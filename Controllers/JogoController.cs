@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Security.Cryptography.Xml;
+using Microsoft.AspNetCore.Http;
 
 namespace CadJogosASPNET.Controllers
 {
@@ -14,7 +15,7 @@ namespace CadJogosASPNET.Controllers
         public JogoController() 
         { 
             DAO = new JogoDAO();
-            GerarProximoId = true;
+            GeraProximoId = true;
         }
 
         public override IActionResult Create()

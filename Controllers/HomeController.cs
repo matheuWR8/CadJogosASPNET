@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace CadJogosASPNET.Controllers
 {
@@ -13,6 +14,7 @@ namespace CadJogosASPNET.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Logado = HelperControllers.UserEstaLogado(HttpContext.Session);
             return View();
         }
     }

@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Mvc;
 using CadJogosASPNET.Models;
 using CadJogosASPNET.DAO;
 using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CadJogosASPNET.Controllers
 {
     public class PadraoControler<T> : Controller where T : PadraoViewModel
     {
         protected PadraoDAO<T> DAO { get; set; }
-        protected bool GerarProximoId { get; set; }
+        protected bool GeraProximoId { get; set; }
         protected string NomeViewIndex { get; set; } = "Index";
         protected string NomeViewForm { get; set; } = "Form";
         protected string NomeViewError { get; set; } = "Error";
+        protected bool ExigeAutenticacao { get; set; } = true;
 
 
         public virtual IActionResult Index()
@@ -102,10 +105,22 @@ namespace CadJogosASPNET.Controllers
             }
         }
 
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            if (ExigeAutenticacao && !HelperControllers.UserEstaLogado(HttpContext.Session))
+                context.Result = RedirectToAction("Index", "Login");
+            else
+            {
+                ViewBag.Logado = true;
+                base.OnActionExecuting(context);
+            }
+        }
+
+
 
         protected virtual void PreencherDadosParaView(string Operacao, T model)
         {
-            if (GerarProximoId && Operacao == "I")
+            if (GeraProximoId && Operacao == "I")
                 model.Id = DAO.ProximoId();
         }
 

@@ -8,6 +8,7 @@ using CadJogosASPNET.DAO;
 using CadJogosASPNET.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace CadJogos.Controllers
 {
@@ -15,7 +16,7 @@ namespace CadJogos.Controllers
     {
         public CategoriaController(){
             DAO = new CategoriaDAO();
-            GerarProximoId = true;
+            GeraProximoId = true;
         }
 
         protected override void ValidarDados(CategoriaViewModel model, string operacao)
