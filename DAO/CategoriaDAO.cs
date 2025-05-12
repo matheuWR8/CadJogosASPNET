@@ -23,10 +23,15 @@ namespace CadJogosASPNET.DAO
 
         protected override SqlParameter[] CriarParametros(CategoriaViewModel model)
         {
+            object imgByte = model.ImagemEmByte;
+            if (imgByte == null)
+                imgByte = DBNull.Value;
+
             SqlParameter[] parametros =
             {
                 new SqlParameter("id", model.Id),
-                new SqlParameter("descricao", model.Descricao)
+                new SqlParameter("descricao", model.Descricao),
+                new SqlParameter("imagem", imgByte)
             };
 
             return parametros;
@@ -40,7 +45,10 @@ namespace CadJogosASPNET.DAO
                 Id = Convert.ToInt32(registro["id"]),
                 Descricao = registro["descricao"].ToString()
             };
-
+            
+            if (registro["imagem"] != DBNull.Value)
+                categoria.ImagemEmByte = registro["imagem"] as byte[];
+                
             return categoria;
         }
 

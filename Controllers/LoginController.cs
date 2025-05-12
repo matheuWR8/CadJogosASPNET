@@ -17,7 +17,7 @@ namespace CadJogosASPNET.Controllers
             if (usuario == "admin" && senha == "1234")
             {
                 HttpContext.Session.SetString("Logado", "true");
-                return RedirectToAction("index", "Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
