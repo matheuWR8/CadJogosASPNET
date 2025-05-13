@@ -138,8 +138,8 @@
 -- end
 -- GO
 
--- ALTER TABLE Categorias ADD imagem varbinary(max);
--- GO
+ALTER TABLE Categorias ADD imagem varbinary(max);
+GO
 
 ALTER PROCEDURE [dbo].[spUpdate_Categorias]
 (
