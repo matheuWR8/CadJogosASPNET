@@ -31,7 +31,7 @@
             <td>@categoria.Id</td>
             <td>@categoria.Descricao</td>
             <td>
-                @if (categoria.ImagemEmBase64 != null)
+                @if (categoria.ImagemEmBase64 != "")
                 {
                     <img id="imgPreview" src="data:image/jpeg;base64,@categoria.ImagemEmBase64" class="img-responsive" width="50">
                 }
